@@ -6,6 +6,10 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      label:
+        description: Release label for a manual run, e.g. 1.0.1
+        required: true
 
 permissions:
   contents: read
@@ -21,3 +25,4 @@ jobs:
       - uses: char-pub/char/actions/publish@d9fa844209b626cc3bb977a2dc16b02281d8052f
         with:
           path: char.yaml
+          label: ${{ inputs.label }}
