@@ -1,0 +1,23 @@
+# 推送版本 tag（例如 v1.0.0）时，通过 char.pub 的 publish Action 发布 char.yaml。
+# 认证只用 GitHub OIDC，仓库里不保存任何 char.pub 凭证。
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: char-pub/char/actions/publish@d9fa844209b626cc3bb977a2dc16b02281d8052f
+        with:
+          path: char.yaml
